@@ -1,0 +1,30 @@
+﻿@inherits LayoutComponentBase
+
+<MudThemeProvider />
+<MudDialog />
+<MudDialogProvider />
+<MudSnackbarProvider />
+<MudPopoverProvider />
+
+<MudLayout>
+    <MudAppBar>
+        <MudIcon Color="Color.Inherit" Edge="Edge.Start" OnClick="@DrawerToggle" />
+        Crypto DCA Calculator
+    </MudAppBar>
+    <MudDrawer @bind-Open="@_drawerOpen">
+        <NavMenu />
+    </MudDrawer>
+    <MudMainContent>
+        @Body
+    </MudMainContent>
+</MudLayout>
+
+@code
+{
+    bool _drawerOpen = false;
+
+    void DrawerToggle()
+    {
+        _drawerOpen = !_drawerOpen;
+    }
+}

@@ -1,0 +1,175 @@
+﻿@page "/"
+@rendermode InteractiveServer
+
+@inherits Tokero.CryptoCalculator.Web.Components.Common.TokeroComponentBase
+
+<PageTitle>Home</PageTitle>
+
+<MudCard>
+    <MudCardContent>
+        <MudButton Variant="Variant.Outlined" Size="Size.Small" OnClick="@(() => OpenCryptoDcaDialog())">
+            Calculate DCA
+        </MudButton>
+
+        <MudSwitch Value="UpdateInvestmentAmount" ValueChanged="GetValueChangedCallback()" Color="Color.Primary">Add funds</MudSwitch>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField T="decimal"
+                          Disabled="!UpdateInvestmentAmount"
+                          Label="Available investment amount"
+                          Value="AvailableInvestmentAmount"
+                          ValueChanged="@OnAvailableInvestmentAmountChanged"
+                          Immediate="true"
+                          Placeholder="Enter amount greater than 0"
+                          Error="@HasError"
+                          ErrorText="@ErrorText" />
+        </MudItem>
+    </MudCardContent>
+</MudCard>
+
+<MudSpacer />
+
+<MudCard Class="my-4" Style="padding: 20px;" Elevation="4">
+    <MudCardContent>
+        <MudText Typo="Typo.h5" Class="mb-3">Cryptocurrency List</MudText>
+        <MudSpacer />
+        <MudTable T="Data.Models.Currency" MultiSelection="true" @bind-SelectedItems="SelectedCurrencies" Comparer="Comparer" Items="@Currencies.Take(100)" Hover="true" Breakpoint="Breakpoint.Sm"
+                  RowClass="cursor-pointer" Dense="true" Bordered="true" Striped="true">
+            <ToolBarContent>
+                <MudText Typo="Typo.subtitle1" Class="mt-2">Currencies</MudText>
+                <MudSpacer />
+                <MudTextField T="string" ValueChanged="@(s => OnSearch(s))" Placeholder="Search by name"
+                              Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search"
+                              IconSize="Size.Medium" Class="mt-0 mx-2" Immediate="true" />
+            </ToolBarContent>
+
+            <HeaderContent>
+                <MudTh Class="small-width-column text-bold">Rank</MudTh>
+                <MudTh class="text-bold">Name</MudTh>
+                <MudTh class="text-bold">Symbol</MudTh>
+                <MudTh class="text-bold">Price</MudTh>
+                <MudTh class="text-bold">Last Updated</MudTh>
+            </HeaderContent>
+
+            <RowTemplate>
+                <MudTd DataLabel="Rank">@context.Rank</MudTd>
+                <MudTd DataLabel="Name">@context.Name</MudTd>
+                <MudTd DataLabel="Symbol">@context.Symbol</MudTd>
+                <MudTd DataLabel="Price">@($"${context.Price:F2}")</MudTd>
+                <MudTd DataLabel="Last Updated">@context.LastUpdated.ToString("g")</MudTd>
+            </RowTemplate>
+
+            <NoRecordsContent>
+                <MudText Typo="Typo.body2" Class="text-secondary">No matching records found</MudText>
+            </NoRecordsContent>
+
+            <LoadingContent>
+                <MudProgressCircular Indeterminate="true" Size="Size.Small" Class="text-primary" />
+                <MudText Typo="Typo.body2" Class="ml-2">Loading...</MudText>
+            </LoadingContent>
+
+            <PagerContent>
+                <MudTablePager Class="mt-2" />
+            </PagerContent>
+        </MudTable>
+    </MudCardContent>
+</MudCard>
+
+<MudSpacer />
+
+<MudCard Class="my-4" Style="padding: 20px;" Elevation="4">
+    <MudCardContent>
+        <MudText Typo="Typo.h5" Class="mb-3">Cryptocurrency Projection/Calculator</MudText>
+        <MudTable Hover="true" Breakpoint="Breakpoint.Sm" Height="500px" FixedHeader="true"
+                  Items="@FlattenedInvestmentResults"
+                  GroupBy="@GroupDefinition"
+                  GroupHeaderStyle="background-color:var(--mud-palette-background-gray)"
+                  Dense="true">
+            <HeaderContent>
+                <MudTh>Date</MudTh>
+                <MudTh>Invested Amount</MudTh>
+                <MudTh>Cryptocurrency Amount</MudTh>
+                <MudTh>ROI</MudTh>
+                <MudTh>Value Today</MudTh>
+                <MudTh></MudTh>
+            </HeaderContent>
+
+            <GroupHeaderTemplate>
+                <MudTh Class="mud-table-cell-custom-group" colspan="6">
+                    <MudText Typo="Typo.subtitle1">@($"{context.Key}")</MudText>
+                </MudTh>
+            </GroupHeaderTemplate>
+
+            <RowTemplate>
+                <MudTd DataLabel="Date">@context.Date.ToString("g")</MudTd>
+                <MudTd DataLabel="Invested Amount">@($"${context.InvestedAmount:F2}")</MudTd>
+                <MudTd DataLabel="Cryptocurrency Amount">@context.CryptocurrencyAmount</MudTd>
+                <MudTd DataLabel="ROI">@($"{context.ROI:P2}")</MudTd>
+                <MudTd DataLabel="Value Today">@($"${context.ValueToday:F2}")</MudTd>
+                <MudTd DataLabel="">-</MudTd>
+            </RowTemplate>
+
+            <GroupFooterTemplate>
+                <MudTh Class="mud-table-cell-custom-group mud-table-cell-custom-group-footer" colspan="6">
+                    <MudText Align="Align.Right" Typo="Typo.subtitle2">Total profit to date: @($"${context.Items.Last().ValueToday:F2}")</MudText>
+                </MudTh>
+            </GroupFooterTemplate>
+            <FooterContent>
+                @if (InvestmentResults.Any())
+                {
+                    <MudTFootRow Class="bold-text">
+                        <MudTd>Total</MudTd>
+                    </MudTFootRow>
+                    <MudTFootRow>
+                        <MudTd colspan="5">Portfolio total: @($"${InvestmentResults.Sum(i => i.CoinProfitTotal):F2}")</MudTd>
+                    </MudTFootRow>
+                }
+            </FooterContent>
+            <NoRecordsContent>
+                <MudText Typo="Typo.body2" Class="text-secondary">No matching records found</MudText>
+            </NoRecordsContent>
+
+            <LoadingContent>
+                <MudProgressCircular Indeterminate="true" Size="Size.Small" Class="text-primary" />
+                <MudText Typo="Typo.body2" Class="ml-2">Loading...</MudText>
+            </LoadingContent>
+
+            <PagerContent>
+                <MudTablePager Class="mt-2" />
+            </PagerContent>
+        </MudTable>
+    </MudCardContent>
+</MudCard>
+
+<!-- Area Chart - Comparing Investment Performance -->
+<MudCard Class="my-4" Style="padding: 20px;" Elevation="4">
+    <MudCardContent>
+        <MudText Typo="Typo.h5" Class="mb-3">Top 10 Coins vs Bitcoin & Ether Performance</MudText>
+
+        <!-- Blazor MudChart for Area Chart (Line Chart with fill) -->
+        <MudChart ChartType="ChartType.Line" Height="350px">
+            <MudChartDataset Label="Bitcoin" Data="@BitcoinPriceData" BackgroundColor="rgba(0, 255, 0, 0.3)" BorderColor="rgba(0, 255, 0, 1)" BorderWidth="2" Fill="true" />
+            <MudChartDataset Label="Ether" Data="@EtherPriceData" BackgroundColor="rgba(0, 0, 255, 0.3)" BorderColor="rgba(0, 0, 255, 1)" BorderWidth="2" Fill="true" />
+            <MudChartDataset Label="BNB" Data="@BNBPriceData" BackgroundColor="rgba(255, 165, 0, 0.3)" BorderColor="rgba(255, 165, 0, 1)" BorderWidth="2" Fill="true" />
+            <MudChartDataset Label="DOGE" Data="@DOGEPriceData" BackgroundColor="rgba(255, 0, 0, 0.3)" BorderColor="rgba(255, 0, 0, 1)" BorderWidth="2" Fill="true" />
+            <MudChartDataset Label="TON" Data="@TONPriceData" BackgroundColor="rgba(255, 255, 0, 0.3)" BorderColor="rgba(255, 255, 0, 1)" BorderWidth="2" Fill="true" />
+            <MudChartDataset Label="TRON" Data="@TRONPriceData" BackgroundColor="rgba(0, 255, 255, 0.3)" BorderColor="rgba(0, 255, 255, 1)" BorderWidth="2" Fill="true" />
+        </MudChart>
+    </MudCardContent>
+</MudCard>
+
+@code {
+    // Example data for Bitcoin, Ether and other selected top coins
+    private List<double> BitcoinPriceData = new List<double> { 50000, 51000, 52000, 53000, 54000, 53000, 52000, 51000, 50000, 49500 };
+    private List<double> EtherPriceData = new List<double> { 3000, 3050, 3100, 3200, 3250, 3200, 3150, 3100, 3050, 3000 };
+    private List<double> BNBPriceData = new List<double> { 450, 455, 460, 470, 475, 470, 460, 455, 450, 445 };
+    private List<double> DOGEPriceData = new List<double> { 0.25, 0.26, 0.28, 0.27, 0.29, 0.28, 0.27, 0.26, 0.25, 0.24 };
+    private List<double> TONPriceData = new List<double> { 10, 11, 12, 13, 14, 13, 12, 11, 10, 9 };
+    private List<double> TRONPriceData = new List<double> { 0.1, 0.105, 0.11, 0.115, 0.12, 0.115, 0.11, 0.105, 0.1, 0.095 };
+
+    // Chart Options (not required for MudChart component, but if you want custom scales or options)
+    private object Scales => new
+    {
+        x = new { beginAtZero = true },
+        y = new { beginAtZero = true }
+    };
+}

@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35327.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tokero.CryptoCalculator.Business", "Tokero.Infrastructure\Tokero.CryptoCalculator.Business.csproj", "{32472129-DE03-4253-AF71-2365F40F9626}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tokero.CryptoCalculator.Data", "TokeroCryptoCalculator.Data\Tokero.CryptoCalculator.Data.csproj", "{B5CE35F4-D67D-4972-B735-24125DA10E7C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tokero.CryptoCalculator.Web", "Tokero.CryptoCalculator.Web\Tokero.CryptoCalculator.Web\Tokero.CryptoCalculator.Web.csproj", "{84837600-C1FD-45E1-B7EE-3ECC9C1A97DB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{32472129-DE03-4253-AF71-2365F40F9626}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32472129-DE03-4253-AF71-2365F40F9626}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32472129-DE03-4253-AF71-2365F40F9626}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32472129-DE03-4253-AF71-2365F40F9626}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5CE35F4-D67D-4972-B735-24125DA10E7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5CE35F4-D67D-4972-B735-24125DA10E7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5CE35F4-D67D-4972-B735-24125DA10E7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5CE35F4-D67D-4972-B735-24125DA10E7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84837600-C1FD-45E1-B7EE-3ECC9C1A97DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84837600-C1FD-45E1-B7EE-3ECC9C1A97DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84837600-C1FD-45E1-B7EE-3ECC9C1A97DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84837600-C1FD-45E1-B7EE-3ECC9C1A97DB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {556F4A9B-EB72-4CFD-85A5-ACEB57704AF9}
+	EndGlobalSection
+EndGlobal

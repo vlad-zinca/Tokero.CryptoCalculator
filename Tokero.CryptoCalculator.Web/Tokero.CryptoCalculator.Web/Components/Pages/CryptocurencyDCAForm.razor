@@ -1,0 +1,46 @@
+﻿<MudDialog>
+    <DialogContent>
+        <MudText Typo="Typo.h6" Class="mb-4">
+            Allocate Investment
+        </MudText>
+        <MudText Typo="Typo.body1" Class="mb-2" Color="Color.Secondary">
+            Remaining Amount: $@RemainingInvestmentAmount
+        </MudText>
+
+        <MudTable Items="@Currencies" Dense="true" Bordered="true" Striped="true">
+            <HeaderContent>
+                <MudTh>Currency Name</MudTh>
+                <MudTh>Symbol</MudTh>
+                <MudTh>Amount</MudTh>
+                <MudTh>Date</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd>@context.Name</MudTd>
+                <MudTd>@context.Symbol</MudTd>
+                <MudTd>
+                    <MudTextField T="decimal"
+                                  Value="@GetCurrencyAmount(context.CurrencyId)"
+                                  ValueChanged="@((val) => SetCurrencyAmount(context.CurrencyId, val))"
+                                  Immediate="true"
+                                  Error="@CurrencyErrors.ContainsKey(context.CurrencyId)"
+                                  ErrorText="@GetErrorText(context.CurrencyId)" />
+                </MudTd>
+                <MudTd>
+                    <MudDatePicker 
+                        Label="Start date"
+                        OpenTo="OpenTo.Month"
+                        DateFormat="MM/dd/yyyy"
+                        bind-Date="@GetCurrencyDate(context.CurrencyId)" 
+                        DateChanged="@(val => SetCurrencyDate(context.CurrencyId, val))" 
+                        MaxDate="@DateTime.Today"
+                        HelperText="Select start date from which you would like the investment to start"
+                    />
+                </MudTd>
+            </RowTemplate>
+        </MudTable>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel" Size="Size.Small">Cancel</MudButton>
+        <MudButton OnClick="Submit" Color="Color.Primary" Size="Size.Small">Submit</MudButton>
+    </DialogActions>
+</MudDialog>
