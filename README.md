@@ -17,9 +17,9 @@ Tokero Crypto Calculator is a web application that helps users simulate a portfo
 1. Clone this repository: git clone https://github.com/vlad-zinca/Tokero.CryptoCalculator.git
 2. Open the solution file in Visual Studio.
 3. Restore NuGet packages.
-4. Make sure that the `Tokero.CryptoCalculator.Web` project is set up as the startup project.
-5. Set up the database using the provided SQL script (`TokeroDbScript.sql`).
-6. Change local connection string in appsettings.json to appropriate value.
+4. Set up the database using the provided SQL script (`TokeroDbScript.sql`).
+5. Change `DefaultConnection` in `appsettings.json` to appropriate value.
+6. Make sure that the `Tokero.CryptoCalculator.Web` project is set up as the startup project.
 7. **IMPORTANT:** In the `CoinMarketCapService.cs` file, there is an `API_KEY` hardcoded. This key belongs to a demo account created for calling the CoinMarketCap API. If you encounter any issues with the key (e.g., permissions or credit expiration), **please use your own key**!
 8. Build and run the application locally.
 
