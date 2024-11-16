@@ -1,6 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
 using System.Text.Json;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Tokero.CryptoCalculator.Data.Repo;
 
 namespace Tokero.CryptoCalculator.Business.CoinMarketCap;

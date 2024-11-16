@@ -1,4 +1,7 @@
-﻿namespace Tokero.CryptoCalculator.Data.Models;
+﻿using System;
+using System.Collections.Generic;
+
+namespace Tokero.CryptoCalculator.Data.Models;
 
 public class InvestmentResult
 {

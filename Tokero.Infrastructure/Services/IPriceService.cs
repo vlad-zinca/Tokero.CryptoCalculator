@@ -1,6 +1,8 @@
-﻿namespace Tokero.CryptoCalculator.Business.Services;
+﻿using System;
+
+namespace Tokero.CryptoCalculator.Business.Services;
 
 public interface IPriceService
 {
-    decimal GetPriceAsync(int cryptoId, DateTime date);
+    decimal GetPrice(int cryptoId, DateTime date);
 }

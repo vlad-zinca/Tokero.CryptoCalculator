@@ -1,4 +1,6 @@
-﻿namespace Tokero.CryptoCalculator.Data.Models;
+﻿using System;
+
+namespace Tokero.CryptoCalculator.Data.Models;
 
 public class Currency
 {

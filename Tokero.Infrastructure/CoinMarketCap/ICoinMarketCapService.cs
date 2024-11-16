@@ -1,4 +1,7 @@
-﻿namespace Tokero.CryptoCalculator.Business.CoinMarketCap
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace Tokero.CryptoCalculator.Business.CoinMarketCap
 {
     public interface ICoinMarketCapService
     {

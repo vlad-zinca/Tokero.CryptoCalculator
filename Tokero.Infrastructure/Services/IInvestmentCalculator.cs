@@ -1,4 +1,6 @@
-﻿using Tokero.CryptoCalculator.Data.Models;
+﻿using System;
+using System.Collections.Generic;
+using Tokero.CryptoCalculator.Data.Models;
 
 namespace Tokero.CryptoCalculator.Business.Services;
 

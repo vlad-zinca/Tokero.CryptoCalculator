@@ -1,5 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 using Tokero.CryptoCalculator.Data.Repo;
 
@@ -16,7 +17,7 @@ public class PriceService : IPriceService
         _context = context;
     }
 
-    public decimal GetPriceAsync(int cryptoId, DateTime date)
+    public decimal GetPrice(int cryptoId, DateTime date)
     {
         // Get the currency from the database
         var currency = _context.Currencies.SingleOrDefault(x => x.CurrencyId == cryptoId);
@@ -47,5 +48,4 @@ public class PriceService : IPriceService
         var fluctuationAmount = currentPrice * randomPercentage;
         return increase ? currentPrice + fluctuationAmount : currentPrice - fluctuationAmount;
     }
-
 }

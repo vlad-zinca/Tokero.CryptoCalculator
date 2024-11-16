@@ -1,4 +1,6 @@
-﻿using Tokero.CryptoCalculator.Data.Models;
+﻿using System;
+using System.Collections.Generic;
+using Tokero.CryptoCalculator.Data.Models;
 using Tokero.CryptoCalculator.Data.Repo;
 
 namespace Tokero.CryptoCalculator.Business.Services;
@@ -32,7 +34,7 @@ public class InvestmentCalculator : IInvestmentCalculator
                 var monthlyInvestment = currencyAmounts[date.Key];
 
                 // Get the price for the cryptocurrency on the current date --> this will be mocked as Coin market does not have Pricing data for Basic plan
-                decimal priceToday = _priceService.GetPriceAsync(currencyId, currentDate);
+                decimal priceToday = _priceService.GetPrice(currencyId, currentDate);
 
                 // Calculate the amount of cryptocurrency bought
                 decimal cryptocurrencyAmount = monthlyInvestment / priceToday;
